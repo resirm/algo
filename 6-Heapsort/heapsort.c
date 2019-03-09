@@ -28,7 +28,7 @@ void heapify_work(heap *A, int node, MIN_MAX type){
 }
 
 void build_heap(heap *A, int node, MIN_MAX type){
-    A->heap_size = A->heap_size;
+    A->heap_size = A->length;
     int i;
     for(i = A->heap_size/2-1; i >= 0; --i){
         heapify_work(A, i, type);

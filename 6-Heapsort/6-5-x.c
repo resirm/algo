@@ -37,7 +37,7 @@ int main(){
         else
             printf("%d\n", A.node[i]);
     }
-    int len = A.heap_size;
+    int len = A.length = A.heap_size;
     heap_sort(&A, MIN_HEAPIFY);
     for(int i = 0; i < len; ++i){
         if(i < len-1)
