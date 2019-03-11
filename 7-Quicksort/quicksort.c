@@ -28,6 +28,7 @@ void quicksort_work(int arr[], int p, int r, ASC_DES t){
         quicksort_work(arr, p, q-1, t);
         quicksort_work(arr, q+1, r, t);
     }
+    // The algorithom TAIL-RECURSIVE-QUICKSORT in problem 7.4 may not be tail recursion, it says "simulate", I don't know.
 }
 
 void quicksort_asc(int arr[], int p, int r){

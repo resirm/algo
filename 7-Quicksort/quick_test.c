@@ -17,7 +17,7 @@ int main(){
         printf("%d, ", a[i]);
     }
     printf("%d\n", a[len-1]);
-    printf("Decending array: \n");
+    printf("Descending array: \n");
     for(int i = 0; i < len-1; ++i){
         printf("%d, ", b[i]);
     }
