@@ -3,7 +3,7 @@
 
 #define asc_des(t,i,j) (t?(i>j):(i<j)) // A[i] is current elem, A[j] is pivot.
 
-typedef char * byte_pointer;
+typedef char *byte_pointer;
 
 typedef enum{
     ASC, DES
