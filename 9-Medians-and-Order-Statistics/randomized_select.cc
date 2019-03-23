@@ -53,7 +53,7 @@ int main(){
     vector<float> A{5.4,2,3,4.22,1,7,9.6,12,6};
     int beg = 0, end = A.end()-A.begin();
     for(int i = 0; i < end; ++i){
-        cout << i << "th number: " << randomized_select(A, beg, end-1, i+1) << endl;
+        cout << i+1 << "th number: " << randomized_select(A, beg, end-1, i+1) << endl;
     }
     for_each(A.begin(), A.end(), [](const int &i)->void{ cout << i << " "; });
     return 0;
