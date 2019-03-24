@@ -2,6 +2,7 @@
 #define BINARY_TREE
 
 #include <iostream>
+#include "queue.h"
 
 template<typename T>
 class Node{
@@ -36,7 +37,16 @@ public:
         // std::cout << "Root constructed!" << std::endl;
     }
     ~BinaryTree(){
-
+        Queue<BinaryTree<int>::pnode> q;
+        q.enqueue(root);
+        while(!q.empty()){
+            auto v = q.dequeue();
+            if(v->left)
+                q.enqueue(v->left);
+            if(v->right)
+                q.enqueue(v->right);
+            delete v;
+        }
     }
     pnode getroot() const {
         return root;
@@ -57,9 +67,6 @@ public:
         }
         else
             p->right->key = val;
-    }
-    void BFS(pnode r){
-
     }
 };
 

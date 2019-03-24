@@ -80,4 +80,7 @@ int main(){
     BFS(root);
     cout << "DFS: " << endl;
     DFS(root);
+    // cout << bt.getroot()->left->key << endl;
+    // bt.~BinaryTree();
+    // cout << bt.getroot()->left->key << endl;
 }
