@@ -5,9 +5,22 @@
 #include "queue.h"
 
 template<typename T>
+class Node;
+
+template<typename T>
+bool operator==(const Node<T> &n1, const Node<T> &n2);
+
+template<typename T>
 class Node{
 public:
     typedef Node<T> *pnode;
+    // friend bool operator==<T>(const Node<T> &n1, const Node<T> &n2);
+    Node<T> &operator=(const Node<T> &n){
+        p = n.p;
+        left = n.left;
+        right = n.right;
+        key = n.key;
+    }
     pnode p;
     pnode left;
     pnode right;
@@ -20,6 +33,12 @@ public:
         key = 0;
     }
 };
+
+template<typename T>
+bool operator==(const Node<T> &n1, const Node<T> &n2){
+    // std::cout << "overload ==" << std::endl;
+    return n1.key == n2.key;
+}
 
 template<typename T>
 class BinaryTree{
@@ -56,6 +75,7 @@ public:
         if(!p->left){
             p->left = new Node<T>;
             insert(p->left, val);
+            p->left->p = p;
         }
         else
             p->left->key = val;
@@ -64,6 +84,7 @@ public:
         if(!p->right){
             p->right = new Node<T>;
             insert(p->right, val);
+            p->right->p = p;
         }
         else
             p->right->key = val;
