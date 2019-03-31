@@ -2,8 +2,9 @@
 #define TREE_WALK_H
 
 #include <iostream>
-#include "../10-Elementary-Data-Structures/binary_tree.h"
+// #include "../10-Elementary-Data-Structures/binary_tree.h"
 #include <iomanip>
+#include "binary_search_tree.h"
 
 // template<typename T>
 // class TreeNode{
@@ -22,36 +23,25 @@ public:
     typedef Node<T> *pnode;
     void preOrder(pnode root)
     {   
-        // std::cout << "Test root->p: " << std::boolalpha << !root->p << std::endl;
         pnode pre = nullptr;
-        // std::cout << "Test pre: " << !pre << std::endl;
         while(root != nullptr)
         {   
-            // std::cout << "True" << std::endl;
-            // std::cout << std::boolalpha << !root->p << "," << !pre << std::endl;
-            // if(root->p && pre && *pre == *(root->p) || !root->p && !pre)
-            if(pre == root->p)
+            if(pre == root->parent)
             {
                 pre = root;
-                // std::cout << pre->key << std::endl;
-                std::cout << root->key << ", ";
-                // std::cout << "Test root->left: " << bool(root->left) << std::endl;
+                std::cout << root->key << ", ";       // print node at first meet
                 auto t = root;
-                root = root->left ? root->left : root->right ? root->right : root->p;
-                // std::cout << (t->left == root) << std::endl;
-                // std::cout << "case 1" << std::endl;
+                root = root->left ? root->left : root->right ? root->right : root->parent;
             }
             else if(pre == (root->left) && root->right != nullptr)
             {
                 pre = root;
                 root = root->right;
-                // std::cout << "case 2" << std::endl;
             }
             else
             {
                 pre = root;
-                root = root->p;
-                // std::cout << "case 3" << std::endl;
+                root = root->parent;
             }
         }
         std::cout << std::endl;
@@ -62,25 +52,27 @@ public:
         pnode pre = nullptr;
         while(root != nullptr)
         {
-            if(pre == root->p)
+            if(pre == root->parent)
             {
                 pre = root;
                 if(root->left == nullptr)
                 {
-                    std::cout << root->key << ", ";
+                    std::cout << root->key << ", ";      // print left leaf and right leaf and inner with right but without left
                 }
-                root = root->left ? root->left : root->right ? root->right : root->p;
+                root = root->left ? root->left : root->right ? root->right : root->parent;
             }
             else if(pre == root->left && root->right != nullptr)
             {
                 pre = root;
-                std::cout << root->key << ", ";
+                std::cout << root->key << ", ";    // print inner node with left and right
                 root = root->right;
             }
             else
             {
+                if(pre == root->left && root->right == nullptr)
+                    std::cout << root->key << ", ";      // print inner with left but without right
                 pre = root;
-                root = root->p;
+                root = root->parent;
             }
         }
         std::cout << std::endl;
@@ -91,14 +83,14 @@ public:
         pnode pre = nullptr;
         while(root != nullptr)
         {
-            if(pre == root->p)
+            if(pre == root->parent)
             {
                 pre = root;
-                if(root->left == nullptr)
+                if(root->left == nullptr && root->right == nullptr)
                 {
-                    std::cout << root->key << ", ";
+                    std::cout << root->key << ", ";  // print leaf node
                 }
-                root = root->left ? root->left : root->right ? root->right : root->p;
+                root = root->left ? root->left : root->right ? root->right : root->parent;
             }
             else if(pre == root->left && root->right != nullptr)
             {
@@ -107,9 +99,9 @@ public:
             }
             else
             {
+                std::cout << root->key << ", ";    // print inner node
                 pre = root;
-                std::cout << root->key << ", ";
-                root = root->p;
+                root = root->parent;
             }
         }
         std::cout << std::endl;

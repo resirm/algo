@@ -1,5 +1,6 @@
 #include <iostream>
 #include "binary_search_tree.h"
+#include "tree_walk.h"
 
 using namespace std;
 
@@ -37,4 +38,11 @@ int main(){
     }
     cout << endl;
     
+    Walk<int> walk;
+    cout << "In-Order walk: " << endl;
+    walk.inOrder(ptree);
+    cout << "Pre-Order walk: " << endl;
+    walk.preOrder(ptree);
+    cout << "Post-Order walk: " << endl;
+    walk.postOrder(ptree);
 }
