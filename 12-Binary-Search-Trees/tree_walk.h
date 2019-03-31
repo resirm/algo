@@ -14,6 +14,8 @@
 //     TreeNode<T> *right;
 // };
 
+// for binary_tree.h, parent pointer is *.p, and for binary_search_tree it's *.parent 
+
 template<typename T>
 class Walk{
 public:
