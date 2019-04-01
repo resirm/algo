@@ -1,7 +1,7 @@
 #ifndef RED_BLACK_TREE_H
 #define RED_BLACK_TREE_H
 
-#include "binary_search_tree.h"
+#include "../12-Binary-Search-Trees/binary_search_tree.h"
 
 template<typename T>
 class RBNode: public Node<T>{
@@ -30,7 +30,7 @@ public:
         Nil->color = node::rb::black;
         BST<T, RBNode<T>>::root = Nil;
         BST<T, RBNode<T>>::Nil = Nil;
-        }
+    }
 private:
     node NilNode;
     pnode Nil;
