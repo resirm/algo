@@ -20,20 +20,22 @@
 template<typename T>
 class Walk{
 public:
-    typedef Node<T> *pnode;
+    typedef T *pnode;
+    pnode Nil;
+    Walk(pnode t=nullptr):Nil(t){ }
     void preOrder(pnode root)
     {   
-        pnode pre = nullptr;
-        while(root != nullptr)
+        pnode pre = Nil;
+        while(root != Nil)
         {   
             if(pre == root->parent)
             {
                 pre = root;
                 std::cout << root->key << ", ";       // print node at first meet
                 auto t = root;
-                root = root->left ? root->left : root->right ? root->right : root->parent;
+                root = root->left != Nil ? root->left : root->right != Nil ? root->right : root->parent;
             }
-            else if(pre == (root->left) && root->right != nullptr)
+            else if(pre == (root->left) && root->right != Nil)
             {
                 pre = root;
                 root = root->right;
@@ -49,19 +51,19 @@ public:
 
     void inOrder(pnode root)
     {
-        pnode pre = nullptr;
-        while(root != nullptr)
+        pnode pre = Nil;
+        while(root != Nil)
         {
             if(pre == root->parent)
             {
                 pre = root;
-                if(root->left == nullptr)
+                if(root->left == Nil)
                 {
                     std::cout << root->key << ", ";      // print left leaf and right leaf and inner with right but without left
                 }
-                root = root->left ? root->left : root->right ? root->right : root->parent;
+                root = root->left != Nil ? root->left : root->right != Nil ? root->right : root->parent;
             }
-            else if(pre == root->left && root->right != nullptr)
+            else if(pre == root->left && root->right != Nil)
             {
                 pre = root;
                 std::cout << root->key << ", ";    // print inner node with left and right
@@ -69,7 +71,7 @@ public:
             }
             else
             {
-                if(pre == root->left && root->right == nullptr)
+                if(pre == root->left && root->right == Nil)
                     std::cout << root->key << ", ";      // print inner with left but without right
                 pre = root;
                 root = root->parent;
@@ -80,19 +82,19 @@ public:
 
     void postOrder(pnode root)
     {
-        pnode pre = nullptr;
-        while(root != nullptr)
+        pnode pre = Nil;
+        while(root != Nil)
         {
             if(pre == root->parent)
             {
                 pre = root;
-                if(root->left == nullptr && root->right == nullptr)
+                if(root->left == Nil && root->right == Nil)
                 {
                     std::cout << root->key << ", ";  // print leaf node
                 }
-                root = root->left ? root->left : root->right ? root->right : root->parent;
+                root = root->left != Nil ? root->left : root->right != Nil ? root->right : root->parent;
             }
-            else if(pre == root->left && root->right != nullptr)
+            else if(pre == root->left && root->right != Nil)
             {
                 pre = root;
                 root = root->right;

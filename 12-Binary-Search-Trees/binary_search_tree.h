@@ -15,87 +15,85 @@ public:
     pnode left;
     pnode right;
     T key;
-    Node(){
-        parent = nullptr;
-        left = nullptr;
-        right = nullptr;
-    }
-    Node(T k){
-        parent = nullptr;
-        left = nullptr;
-        right = nullptr;
-        key = k;
-    }
+    Node(T k=0):parent(nullptr),left(nullptr),right(nullptr),key(k) { }
+    virtual ~Node() = default;
 };
 
-template<typename T>
+template<typename T, typename N>
 class BST{
 public:
-    typedef Node<T> node;
+    typedef T value_type;
+    typedef N node;
     typedef node *pnode;
     typedef const node *cnode;
-private:
-    pnode root = nullptr;
-    pnode do_find(cnode &x, const T &k) const{
-        while(x != nullptr && k != x->key){
+
+
+    BST(pnode r=nullptr){ root = r; Nil = r; }
+    virtual ~BST() = default;
+protected:
+    pnode root;
+    pnode Nil;
+
+    virtual auto do_find(cnode x, const T &k) const -> decltype(const_cast<pnode>(x)){
+        while(x != Nil && k != x->key){
             if(k < x->key){
                 x = x->left;
             }else{
                 x = x->right;
             }
         }
-        return x;
+        return const_cast<pnode>(x);
     }
 
-    pnode do_get_min(cnode x) const{
+    virtual auto do_get_min(cnode x) const -> decltype(const_cast<pnode>(x)){
         #ifdef DEBUG
         std::cout << "get_min work." << std::endl;
         #endif // DEBUG
-        while(x->left != nullptr){
+        while(x->left != Nil){
             x = x->left;
         }
         return const_cast<pnode>(x);
     }
 
-    pnode do_get_max(cnode x) const{
+    virtual auto do_get_max(cnode x) const -> decltype(const_cast<pnode>(x)){
         #ifdef DEBUG
         std::cout << "get_max work." << std::endl;
         #endif // DEBUG
 
-        while(x->right != nullptr){
+        while(x->right != Nil){
             x = x->right;
         }
-        return const_cast<pnode>(x);;
+        return const_cast<pnode>(x);
     }
 
-    pnode do_get_successor(cnode x) const{
-        if(x->right != nullptr){
+    virtual auto do_get_successor(cnode x) const -> decltype(const_cast<pnode>(x)){
+        if(x->right != Nil){
             return do_get_min(x->right);
         }
         pnode y = x->parent;
-        while(y != nullptr && x == y->right){
+        while(y != Nil && x == y->right){
             x = y;
             y = y->parent;
         }
         return y;
     }
 
-    pnode do_get_predecessor(cnode x) const{
-        if(x->left != nullptr){
+    virtual auto do_get_predecessor(cnode x) const -> decltype(const_cast<pnode>(x)){
+        if(x->left != Nil){
             return do_get_max(x->left);
         }
         pnode y = x->parent;
-        while(y != nullptr && x == y->left){
+        while(y != Nil && x == y->left){
             x = y;
             y = y->parent;
         }
         return y;
     }
 
-    void do_insert(pnode z){
-        pnode y = nullptr;
+    virtual void do_insert(pnode z){
+        pnode y = Nil;
         pnode x = root;
-        while(x != nullptr){
+        while(x != Nil){
             y = x;
             if(z->key < x->key){
                 x = x->left;
@@ -104,7 +102,7 @@ private:
             }
         }
         z->parent = y;
-        if(y == nullptr){
+        if(y == Nil){
             root = z;
         }else if(z->key < y->key){
             y->left = z;
@@ -116,23 +114,23 @@ private:
         #endif // DEBUG
     }
 
-    void transparent(pnode u, pnode v){
-        if(u->parent == nullptr){
+    virtual void transparent(pnode u, pnode v){
+        if(u->parent == Nil){
             root = v;
         }else if(u == u->parent->left){
             u->parent->left = v;
         }else{
             u->parent->right = v;
         }
-        if(v != nullptr){
+        if(v != Nil){
             v->parent = u->parent;
         }
     }
 
-    void do_remove(pnode z){
-        if(z->left == nullptr){
+    virtual void do_remove(pnode z){
+        if(z->left == Nil){
             transparent(z, z->right);
-        }else if(z->right == nullptr){
+        }else if(z->right == Nil){
             transparent(z, z->left);
         }else{
             pnode y = do_get_min(z->right);
@@ -148,56 +146,59 @@ private:
     }
 
 public:
+    virtual pnode get_nil(){
+        return Nil;
+    }
     // insert and remove may invalidate the root returned by get_root before.
-    pnode get_root(){
+    virtual pnode get_root(){
         return root;
     }
     // tree_search
-    pnode find(cnode x, const T &k){
+    virtual auto find(cnode x, const T &k) -> decltype(const_cast<pnode>(x)){
         return do_find(x, k);
     }
 
-    cnode find(cnode x, const T &k) const{
-        return do_find(k);
+    virtual auto find(cnode x, const T &k) const -> decltype(const_cast<pnode>(x)){
+        return do_find(x, k);
     }
 
-    pnode min(cnode x){
+    virtual auto min(cnode x) -> decltype(const_cast<pnode>(x)){
         return do_get_min(x);
     }
     
-    cnode min(cnode x) const{
+    virtual auto min(cnode x) const -> decltype(x){
         return do_get_min(x);
     }
 
-    pnode max(cnode x){
+    virtual auto max(cnode x) -> decltype(const_cast<pnode>(x)){
         return do_get_max(x);
     }
     
-    cnode max(cnode x) const{
+    virtual auto max(cnode x) const -> decltype(x){
         return do_get_max(x);
     }
 
-    pnode successor(cnode x){
+    virtual auto successor(cnode x) -> decltype(const_cast<pnode>(x)){
         return do_get_successor(x);
     }
 
-    cnode successor(cnode x) const{
+    virtual auto successor(cnode x) const -> decltype(x){
         return do_get_successor(x);
     }
 
-    pnode predecessor(cnode x){
+    virtual auto predecessor(cnode x) -> decltype(const_cast<pnode>(x)){
         return do_get_predecessor(x);
     }
 
-    cnode predecessor(cnode x) const{
+    virtual auto predecessor(cnode x) const -> decltype(x){
         return do_get_predecessor(x);
     }
 
-    void insert(pnode z){
+    virtual void insert(pnode z){
         do_insert(z);
     }
 
-    void remove(pnode z){
+    virtual void remove(pnode z){
         do_remove(z);
     }
 };

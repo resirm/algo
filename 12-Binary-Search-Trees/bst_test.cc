@@ -8,7 +8,7 @@ typedef Node<int> node;
 typedef node *pnode;
 
 int main(){
-    BST<int> bst;
+    BST<int, Node<int>> bst;
     pnode ptree = bst.get_root();
     node n1(1), n2(2),n3(10), n4(16), n5(7), n6(11), n7(4), n8(22), n9(17), n10(9);
     bst.insert(&n1);
@@ -38,7 +38,7 @@ int main(){
     }
     cout << endl;
     
-    Walk<int> walk;
+    Walk<Node<int>> walk(nullptr);
     cout << "In-Order walk: " << endl;
     walk.inOrder(ptree);
     cout << "Pre-Order walk: " << endl;
