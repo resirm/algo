@@ -28,11 +28,14 @@ int main(){
     BST<int, RBNode<int>> *pbst = &bst;
     // pnode ptree = static_cast<pnode>(pbst->get_root());
     prbnode prbtree = prbt->get_root();
-    pnode ptree = pbst->get_root();
+    prbnode ptree = pbst->get_root();
     // vector<node> vn{node(1), node(2), node(10), node(16), node(7), node(11), node(4), node(22), node(17), node(9)};
     vector<rbnode> vrbn{rbnode(1), rbnode(2), rbnode(10), rbnode(16), rbnode(7), rbnode(11), rbnode(4), rbnode(22), rbnode(17), rbnode(9)};
-
+    
     for(auto &c : vrbn){
+        // c.parent = Nil;
+        // c.left = Nil;
+        // c.right = Nil;
         // pbst->insert(&c);
         prbt->insert(&c);
     }
@@ -54,6 +57,7 @@ int main(){
     cout << ptree->key << endl;
     // order_print(pbst);
     order_print(prbt);
+    ptree = pbst->get_root();
     prbtree = prbt->get_root();
     // for(auto i = prbt->get_root(); i != rbt.get_nil(); i = prbt->successor(i)){
     //     cout << i->key << ", " << i->color << ", ";
@@ -74,4 +78,11 @@ int main(){
     walk.preOrder(prbtree);
     cout << "Post-Order walk: " << endl;
     walk.postOrder(prbtree);
+    // Walk<RBNode<int>> walk(Nil);
+    // cout << "In-Order walk: " << endl;
+    // walk.inOrder(ptree);
+    // cout << "Pre-Order walk: " << endl;
+    // walk.preOrder(ptree);
+    // cout << "Post-Order walk: " << endl;
+    // walk.postOrder(ptree);
 }
