@@ -20,7 +20,9 @@ void order_print(BST<int, rbnode> *tree){
 
 int main(){
     RBT<int> rbt;
-    BST<int, RBNode<int>> bst;
+    rbnode nilnode(0, rbnode::rb::black);
+    prbnode Nil = &nilnode;
+    BST<int, RBNode<int>> bst(Nil);
     // BST<int> *pbst = &rbt;
     RBT<int> *prbt = &rbt;
     BST<int, RBNode<int>> *pbst = &bst;
