@@ -11,7 +11,7 @@ void insertion_sort(vector<T> &arr){
     for(size_t i = 1; i < arr.size(); ++i){
         T key = arr.at(i);
         size_t j = i-1;
-        while(j >= 0 && less<T>()(arr.at(j), key)){
+        while(j >= 0 && less<T>()(key, arr.at(j))){
             arr.at(j+1) = arr.at(j);
             j -= 1;
         }
