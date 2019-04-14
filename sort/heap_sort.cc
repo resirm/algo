@@ -36,15 +36,12 @@ public:
         for(int i = size/2-1; i >= 0; --i){ // if i is type size_t, it will be a dead loop!
             max_heapify(i);
         }
-        // for(const auto &c : heap)
-        //     cout << c << ", ";
-        // cout << endl;
     }
 
     void heap_sort(){
         build_heap();
         cout << "build finished." << endl;
-        while(size > 0){
+        while(size > 1){
             swap(heap.at(0), heap.at(size-1));
             --size;
             max_heapify(0);
