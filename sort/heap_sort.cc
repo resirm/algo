@@ -19,7 +19,6 @@ public:
         cout << "Heap size: " << size << endl;
     }
     void max_heapify(size_t i){
-        cout << "heapify input i: " << i << endl;
         while(i < size){
             size_t max = i;
             if(left(i) < size && less<T>()(heap.at(i), heap.at(left(i))))
@@ -30,18 +29,16 @@ public:
                 return;
             swap(heap.at(i), heap.at(max));
             i = max;
-            // cout << i << ", ";
         }
-        // cout << endl;
     }
 
     void build_heap(){
         for(int i = size/2-1; i >= 0; --i){ // if i is type size_t, it will be a dead loop!
             max_heapify(i);
         }
-        for(const auto &c : heap)
-            cout << c << ", ";
-        cout << endl;
+        // for(const auto &c : heap)
+        //     cout << c << ", ";
+        // cout << endl;
     }
 
     void heap_sort(){
@@ -51,6 +48,7 @@ public:
             swap(heap.at(0), heap.at(size-1));
             --size;
             max_heapify(0);
+            cout << "iteration " << len-size << endl;
             for(const auto &c : heap)
                 cout << c << ", ";
             cout << endl;
