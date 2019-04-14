@@ -4,6 +4,7 @@
 #include <stack>
 #include <random>
 #include <chrono>
+#include <algorithm>
 
 using namespace std;
 typedef chrono::milliseconds msec;
@@ -78,12 +79,12 @@ void quicksort2(vector<T> &arr, int p, int r){ // non-recursive
 }
 
 int main(){
-    vector<int> arr, arr2;
+    vector<int> arr, arr2, arr3;
     mt19937 rand_engine(random_device{}());
     for(int i = 0; i < 10000000; ++i){
         arr.push_back(uniform_int_distribution<int>{0, 1000000}(rand_engine));
     }
-    arr2 = arr;
+    arr3 = arr2 = arr;
     // vector<int> arr{1,5,2,6,14,3,66,23,43,26,74,21,17};
     // cout << "Input array: " << endl;
     // for(const auto &c : arr)
@@ -96,9 +97,15 @@ int main(){
     cout << "Quicksort recursive. Total time: " << ms.count() << "ms." << endl;
     begin = clk::now();
     quicksort2(arr2, 0, arr2.size()-1);
+    sort(arr2.begin(), arr2.end());
     end = clk::now();
     ms = chrono::duration_cast<msec>(end-begin);
     cout << "Quicksort non-recursive. Total time: " << ms.count() << "ms." << endl;
+    begin = clk::now();
+    sort(arr3.begin(), arr3.end());
+    end = clk::now();
+    ms = chrono::duration_cast<msec>(end-begin);
+    cout << "std::sort. Total time: " << ms.count() << "ms." << endl;
     // cout << "Sorted array: " << endl;
     // for(const auto &c : arr)
     //     cout << c << ", ";
