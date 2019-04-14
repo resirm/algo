@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <stack>
 
 using  namespace std;
 
@@ -25,13 +26,33 @@ void quicksort(vector<T> &arr, size_t p, size_t r){
     }
 }
 
+template<typename T>
+void quicksort2(vector<T> &arr, size_t p, size_t r){ // non-recursive
+    stack<pair<size_t, size_t>> subseq;
+    size_t q = partition(arr, p, r);
+    if(p < q-1)
+        subseq.push({p, q-1});
+    if(q < r)
+        subseq.push({q, r});
+    while(!subseq.empty()){
+        auto p_r = subseq.top();
+        subseq.pop();
+        size_t p = p_r.first, r = p_r.second;
+        size_t q = partition(arr, p, r);
+        if(p < q-1)
+            subseq.push({p, q-1});
+        if(q < r)
+            subseq.push({q, r});
+    }
+}
+
 int main(){
     vector<int> arr{1,5,2,6,14,3,66,23,43,26,74,21,17};
     cout << "Input array: " << endl;
     for(const auto &c : arr)
         cout << c << ", ";
     cout << endl;
-    quicksort(arr, 0, arr.size()-1);
+    quicksort2(arr, 0, arr.size()-1);
     cout << "Sorted array: " << endl;
     for(const auto &c : arr)
         cout << c << ", ";
