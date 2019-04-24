@@ -113,7 +113,6 @@ int main(){
     cout << "Quicksort recursive. Total time: " << ms.count() << "ms." << endl;
     begin = clk::now();
     quicksort2(arr2, 0, arr2.size()-1);
-    sort(arr2.begin(), arr2.end());
     end = clk::now();
     ms = chrono::duration_cast<msec>(end-begin);
     cout << "Quicksort non-recursive. Total time: " << ms.count() << "ms." << endl;

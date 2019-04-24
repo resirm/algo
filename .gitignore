@@ -5,3 +5,7 @@
 *.s
 *.py[cod]
 test.cc
+
+# OS X
+*.dSYM
+*.app
