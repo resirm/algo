@@ -19,7 +19,7 @@ void coungting_sort(vector<T> &arr, vector<T> &sorted, int k){ // k is the numbe
         cnt[i] += cnt[i-1];
     }
     for(int i = arr.size()-1; i >= 0; --i){
-        sorted[cnt[arr[i]]] = arr[i];
+        sorted[cnt[arr[i]]-1] = arr[i];
         --cnt[arr[i]];
     }
 }
@@ -48,7 +48,7 @@ int main(){
     ms = chrono::duration_cast<msec>(end-begin);
     cout << "std::sort. Total time: " << ms.count() << "ms." << endl;
     // cout << "Sorted array: " << endl;
-    // for(const auto &c : arr2)
+    // for(const auto &c : sorted)
     //     cout << c << ", ";
     // cout << endl;
     return 0;
