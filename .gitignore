@@ -9,3 +9,4 @@ test.cc
 # OS X
 *.dSYM
 *.app
+.DS_Store
