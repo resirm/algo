@@ -29,6 +29,72 @@ void DFS(BinaryTree<int>::pnode root){
                 q.enqueue(nullptr);
         }
     }
+    cout << endl;
+}
+
+void PreDFS(BinaryTree<int>::pnode root){
+    if(root == nullptr){
+        return;
+    }
+    Deque<BinaryTree<int>::pnode> deq;
+    while(true){
+        while(root != nullptr){
+            cout << root->key << ", ";
+            if(root->right != nullptr){
+                deq.enqueue(root->right);
+            }
+            root = root->left;
+        }
+        if(deq.empty()){
+            break;
+        }
+        root = deq.rdequeue();
+    };
+    cout << endl;
+}
+
+void InDFS(BinaryTree<int>::pnode root){
+    Deque<BinaryTree<int>::pnode> deq;
+    while(true){
+        while(root != nullptr){
+            deq.enqueue(root);
+            root = root->left;
+        }
+        if(deq.empty()){
+            break;
+        }
+        root = deq.rdequeue();
+        cout << root->key << ", ";
+        root = root->right;
+    }
+    cout << endl;
+}
+
+void PostDFS(BinaryTree<int>::pnode root){
+    Deque<BinaryTree<int>::pnode> deq;
+    if(root != nullptr){
+        deq.enqueue(root);
+    }
+    while(!deq.empty()){
+        if(root != deq.tail()->left && root != deq.tail()->right){
+            auto p = deq.tail();
+            while(p != nullptr){
+                if(p->left != nullptr){
+                    if(p->right != nullptr){
+                        deq.enqueue(p->right);
+                    }
+                    deq.enqueue(p->left);
+                }else{
+                    deq.enqueue(p->right);
+                }
+                p = deq.tail();
+            }
+            deq.rdequeue();
+        }
+        root = deq.rdequeue();
+        cout << root->key << ", ";
+    }
+    cout << endl;
 }
 
 void BFS(BinaryTree<int>::pnode root){
@@ -52,6 +118,7 @@ int main(){
     q.enqueue(root);
     int i = 1;
     cout << "Construct tree: " << endl;
+    cout << root->key << endl;
     while(i < 20){
         BinaryTree<int>::pnode v;
         Queue<BinaryTree<int>::pnode> ql;
@@ -83,4 +150,10 @@ int main(){
     // cout << bt.getroot()->left->key << endl;
     // bt.~BinaryTree();
     // cout << bt.getroot()->left->key << endl;
+    cout << "Pre DFS: " << endl;
+    PreDFS(root);
+    cout << "In DFS: " << endl;
+    InDFS(root);
+    cout << "Post DFS: " << endl;
+    PostDFS(root);
 }
