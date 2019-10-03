@@ -2,6 +2,7 @@
 #include "binary_tree.h"
 #include "queue.h"
 #include "deque.h"
+#include <algorithm>
 
 using std::cout; using std::endl;
 
@@ -111,6 +112,56 @@ void BFS(BinaryTree<int>::pnode root){
     cout << endl;
 }
 
+void ZigZag(BinaryTree<int>::pnode root){
+    Deque<BinaryTree<int>::pnode> deq1, deq2;
+    if(root != nullptr){
+        deq1.enqueue(root);
+    }
+    while(!deq1.empty() || !deq2.empty()){
+        if(!deq1.empty()){
+            while(!deq1.empty()){
+                auto p = deq1.rdequeue();
+                cout << p->key << ", ";
+                if(p->left != nullptr){
+                    deq2.enqueue(p->left);
+                }
+                if(p->right != nullptr){
+                    deq2.enqueue(p->right);
+                }
+            }
+        }else{
+            while(!deq2.empty()){
+                auto p = deq2.rdequeue();
+                cout << p->key << ", ";
+                if(p->right != nullptr){
+                    deq1.enqueue(p->right);
+                }
+                if(p->left != nullptr){
+                    deq1.enqueue(p->left);
+                }
+            }
+        }
+    }
+    cout << endl;
+}
+
+void Mirror(BinaryTree<int>::pnode root){
+    Deque<BinaryTree<int>::pnode> deq;
+    if(root != nullptr){
+        deq.enqueue(root);
+    }
+    while(!deq.empty()){
+        auto p = deq.dequeue();
+        std::swap(p->left, p->right);
+        if(p->left != nullptr){
+            deq.enqueue(p->left);
+        }
+        if(p->right != nullptr){
+            deq.enqueue(p->right);
+        }
+    }
+}
+
 int main(){
     BinaryTree<int> bt;
     Queue<BinaryTree<int>::pnode> q;
@@ -156,4 +207,10 @@ int main(){
     InDFS(root);
     cout << "Post DFS: " << endl;
     PostDFS(root);
+    cout << "ZigZag DFS: " << endl;
+    ZigZag(root);
+    cout << "Mirror tree: " << endl;
+    Mirror(root);
+    cout << "BFS: " << endl;
+    BFS(root);
 }
